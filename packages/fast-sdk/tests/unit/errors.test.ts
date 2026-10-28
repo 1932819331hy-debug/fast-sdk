@@ -369,7 +369,9 @@ describe("Error handling", () => {
       });
 
       const error = await call().catch((error) => error);
-      expect(error).toBeInstanceOf(RestError);
+      if (!(error instanceof RestError)) {
+        expect.unreachable("Expected a RestError");
+      }
       expect(error).toMatchObject({
         status: 400, code: "VALIDATOR_REJECTED", message: "validator rejection",
       });
